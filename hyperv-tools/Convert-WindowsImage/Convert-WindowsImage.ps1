@@ -1,4 +1,4 @@
-﻿function
+function
 Convert-WindowsImage
 {
 
@@ -3766,11 +3766,9 @@ VirtualHardDisk
             {
                 Write-W2VInfo -text "Adding Windows Drivers to the Image"
 
-                $Driver | ForEach-Object -Process 
-                {
-
+                $Driver | ForEach-Object -Process {
                     Write-W2VInfo -text "Driver path: $PSItem"
-                    $Dism = Add-WindowsDriver -Path $windowsDrive -Recurse -Driver $PSItem
+                    $Dism = Add-WindowsDriver -Path $windowsDrive -Driver $PSItem
                 }
             }
 
@@ -3891,7 +3889,7 @@ VirtualHardDisk
                 Write-W2VInfo "Closing registry hive..."
                 Dismount-RegistryHive -HiveMountPoint $mountedHive
             }
-
+<#
             # If VHD is mounted, unmount it
             if (Test-Path $VHDPath)
             {
@@ -3907,7 +3905,7 @@ VirtualHardDisk
                     Dismount-DiskImage -ImagePath $VHDPath
                 }
             }
-
+#>
             # If we still have an ISO open, close it.
             if ($openIso -ne $null) 
             {
@@ -3917,10 +3915,13 @@ VirtualHardDisk
 
             if (-not $CacheSource)
             {
-                if (Test-Path $tempSource)
+				if ($tempSource)
                 {
-                    Remove-Item -Path $tempSource -Force
-                }
+					if (Test-Path $tempSource)
+					{
+						Remove-Item -Path $tempSource -Force
+					}
+				}
             }
     
             # Close out the transcript and tell the user we're done.
