@@ -3665,6 +3665,11 @@ VirtualHardDisk
                         {   
                             $bcdBootArgs += "/f UEFI"   # Specifies the firmware type of the target system partition
                         }
+                        
+                        "BIOS" 
+                        {   
+                            $bcdBootArgs += "/f BIOS"   # Specifies the firmware type of the target system partition
+                        }
 
                         "WindowsToGo" 
                         {    
@@ -3686,15 +3691,15 @@ VirtualHardDisk
 
                         Write-W2VInfo "Fixing the Device ID in the BCD store on $($VHDFormat)..."
                         Run-Executable -Executable "BCDEDIT.EXE" -Arguments (
-                            "/store $($windowsDrive)boot\bcd",
+                            "/store $($windowsDrive)\boot\bcd",
                             "/set `{bootmgr`} device locate"
                         )
                         Run-Executable -Executable "BCDEDIT.EXE" -Arguments (
-                            "/store $($windowsDrive)boot\bcd",
+                            "/store $($windowsDrive)\boot\bcd",
                             "/set `{default`} device locate"
                         )
                         Run-Executable -Executable "BCDEDIT.EXE" -Arguments (
-                            "/store $($windowsDrive)boot\bcd",
+                            "/store $($windowsDrive)\boot\bcd",
                             "/set `{default`} osdevice locate"
                         )
                     }
